@@ -83,8 +83,16 @@ public class DoubleLinkedList {
      * this method will return the position of data from last
      */
     int getPositionFromTail(int data){
-        
-       
+        Node tmp = tail;
+        int position = 1;
+        int lastPosition = -1;
+        while (tmp != null) {
+            if (tmp.data == data) {
+                lastPosition = position;
+            }
+            tmp = tmp.p;
+            position++;
+        }
         return 1;
     }
     //5. complete getLastPositionFromTail
@@ -94,19 +102,31 @@ public class DoubleLinkedList {
      * and the searching start from last
      */
     int getLastPositionFromTail(int data){
-        
-        
-        return 1;
+        Node tmp = tail;
+        int position = 1;
+        int lastPosition = -1;
+        while (tmp != null) {
+            if (tmp.data == data) {
+                lastPosition = position;
+            }
+            tmp = tmp.p;
+            position++;
+        }
+        return lastPosition;
     }
     //6. complete getAverage
     /**
      * this method will return average from all data
      */
     double getAverage(){
-        double average = 0;
-        //complete here
-        
-        return average;
+        if (isEmpty()) return 0;
+        Node tmp = head;
+        int sum = 0;
+        while (tmp != null) {
+            sum += tmp.data;
+            tmp = tmp.n;
+        }
+        return (double) sum / size;
     }
     //7. complete the missing code getNodeByIndex
     /**
@@ -122,16 +142,15 @@ public class DoubleLinkedList {
         return tmp;
     }
     void sort(){
-        for(int i=0; i<size-1; i++){
-            //comparisson data with adjacent
-            for(int j=1; j<size-i; j++){
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - 1 - i; j++) {
                 Node node1 = getNodeByIndex(j);
-                Node node2 = getNodeByIndex(j-1);
-                if(node2.data > node1.data){
-                    //SWAP
-                    int tmp = node2.data;
-                    node2.data = node1.data;
-                    node1.data = tmp;
+                Node node2 = getNodeByIndex(j + 1);
+                if (node1.data > node2.data) {
+                    // Swap the data
+                    int tmp = node1.data;
+                    node1.data = node2.data;
+                    node2.data = tmp;
                 }
             }
         }
@@ -148,9 +167,15 @@ public class DoubleLinkedList {
     double getMedian(){
         double median = 0;
         //complete to calculate median below
+        if (isEmpty()) return 0;
         sort();
-        
-        return median;
+        if (size % 2 == 1) {
+            return getNodeByIndex(size / 2).data;
+        } else {
+            Node mid1 = getNodeByIndex(size / 2 - 1);
+            Node mid2 = getNodeByIndex(size / 2);
+            return (mid1.data + mid2.data) / 2.0;
+        }
     }
     //9. complete main to make a simulation
     public static void main(String[] args){
@@ -160,11 +185,29 @@ public class DoubleLinkedList {
         dll.addFirst(10);
         dll.addFirst(15);
         dll.addFirst(150);
-        dll.print();
+        dll.print(); 
+        
         dll.deleteFirst();
-        dll.print();
+        dll.print(); 
+        
+        dll.addLast(5);
+        dll.print(); 
+        
+        dll.deleteLast();
+        dll.print(); 
+        dll.printFromTail(); 
+        
+        System.out.println("Posision from tail");
+        System.out.println(dll.getPositionFromTail(10)); 
+        System.out.println("LastPositionFromTail");
+        System.out.println(dll.getLastPositionFromTail(10));
+        System.out.println("Average");
+        System.out.println(dll.getAverage()); 
+        System.out.println("Median");
+        System.out.println(dll.getMedian()); 
+    }
         //continue to call addLast, deleteLast, printFromTail, 
         //getPositionFromTail, getLastPositionFromTail,
         //getAverage, getMedian
-    }
+    
 }
