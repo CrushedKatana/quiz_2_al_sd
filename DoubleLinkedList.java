@@ -45,7 +45,9 @@ public class DoubleLinkedList {
             head = tail = nu;
         }else{
            //complete here
-           
+            tail.n = nu;
+            nu.p = tail;
+            tail = nu;
         }
         size++;
     }
@@ -54,16 +56,26 @@ public class DoubleLinkedList {
      * this method will remove tail
      */
     void deleteLast(){
-       
-        
+       if (isEmpty()) return;
+        tail = tail.p;
+        if (tail != null) {
+            tail.n = null;
+        } else {
+            head = null;
+        }
+        size--;
     }
     //3. complete the printFromTail
     /**
      * this method will print all data from tail to head
      */
     void printFromTail(){
-        
-        
+        Node tmp = tail;
+        while (tmp != null) {
+            System.out.print(tmp.data + "-");
+            tmp = tmp.p;
+        }
+        System.out.println("");
     }
     //4. complete getPositionFromTail
     //and modify return 1
